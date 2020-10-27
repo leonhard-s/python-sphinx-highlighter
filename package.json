@@ -1,0 +1,23 @@
+{
+    "name": "python-sphinx-highlight",
+    "displayName": "Python Sphinx Highlight",
+    "description": "Highlight Sphinx markup inside Python docstrings.",
+    "version": "0.0.1",
+    "engines": {
+        "vscode": "^1.50.0"
+    },
+    "categories": [
+        "Programming Languages"
+    ],
+    "contributes": {
+        "grammars": [
+            {
+                "path": "./syntaxes/injection.json",
+                "scopeName": "python-sphinx.injection",
+                "injectTo": [
+                    "source.python"
+                ]
+            }
+        ]
+    }
+}
