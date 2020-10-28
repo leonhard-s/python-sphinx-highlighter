@@ -326,6 +326,28 @@
                     "name": "entity.name.type.sphinx"
                 }
             }
+        },
+        "google-style": {
+            "patterns": [
+                {
+                    "include": "#google-headings"
+                },
+                {
+                    "include": "#google-arguments"
+                }
+            ]
+        },
+        "google-headings": {
+            "match": "^( *)(\\w+):$",
+            "name": "markup.bold.heading.sphinx"
+        },
+        "google-arguments": {
+            "match": "^( +)(\\*{0,2}\\w+( \\(optional\\))?):(?= \\S)",
+            "captures": {
+                "2": {
+                    "name": "entity.name.type.sphinx"
+                }
+            }
         }
     }
 }

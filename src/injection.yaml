@@ -201,3 +201,20 @@ repository:
     captures:
       "1": { name: entity.name.tag.sphinx }
       "2": { name: "entity.name.type.sphinx" }
+
+  google-style:
+    # Custom rules to apply for juicier Google-style docstrings
+    patterns:
+      - include: "#google-headings"
+      - include: "#google-arguments"
+
+  google-headings:
+    # Google-style headings, i.e. single words ending in a single colon
+    match: "^( *)(\\w+):$"
+    name: markup.bold.heading.sphinx
+
+  google-arguments:
+    # Google-style arguments
+    match: "^( +)(\\*{0,2}\\w+( \\(optional\\))?):(?= \\S)"
+    captures:
+      "2": { name: entity.name.type.sphinx }
