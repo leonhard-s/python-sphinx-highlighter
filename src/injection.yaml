@@ -3,7 +3,7 @@
 # corresponding VS Code build taks has been provided in the repository.
 ---
 scopeName: python-sphinx.injection
-injectionSelector: string.quoted.docstring.multi.python
+injectionSelector: string.quoted.docstring
 
 # This is a special key that will be extracted by the Python utility
 # "build-grammar.py".

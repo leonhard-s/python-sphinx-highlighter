@@ -1,6 +1,6 @@
 {
     "scopeName": "python-sphinx.injection",
-    "injectionSelector": "string.quoted.docstring.multi.python",
+    "injectionSelector": "string.quoted.docstring",
     "patterns": [
         {
             "include": "#directives"
