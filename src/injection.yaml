@@ -199,8 +199,8 @@ repository:
     # Add support for colourful cross-references
     match: :(\w+):`([^`]+)`(?!_)
     captures:
-      "1": { name: entity.name.tag.sphinx }
-      "2": { name: "entity.name.type.sphinx" }
+      "1": { name: entity.name.role.sphinx }
+      "2": { name: string.other.interpreted.sphinx }
 
   google-style:
     # Custom rules to apply for juicier Google-style docstrings

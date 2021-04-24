@@ -320,10 +320,10 @@
             "match": ":(\\w+):`([^`]+)`(?!_)",
             "captures": {
                 "1": {
-                    "name": "entity.name.tag.sphinx"
+                    "name": "entity.name.role.sphinx"
                 },
                 "2": {
-                    "name": "entity.name.type.sphinx"
+                    "name": "string.other.interpreted.sphinx"
                 }
             }
         },
