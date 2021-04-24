@@ -3,22 +3,13 @@
     "injectionSelector": "string.quoted.docstring",
     "patterns": [
         {
-            "include": "#directives"
+            "include": "#directive"
         },
         {
-            "include": "#raw-blocks"
+            "include": "#interpreted-text-basic"
         },
         {
             "include": "#emphasis"
-        },
-        {
-            "include": "#link-def"
-        },
-        {
-            "include": "#interpreted-text-inline"
-        },
-        {
-            "include": "#anonymous-link"
         },
         {
             "include": "#inline-literal"
@@ -27,73 +18,32 @@
             "include": "#link-reference"
         },
         {
-            "include": "#link-trailing-underscore"
-        },
-        {
-            "include": "#cross-references"
+            "include": "#link-definition"
         },
         {
             "include": "#tag"
         },
         {
-            "include": "#headings"
-        },
-        {
-            "include": "#google-style"
+            "include": "#cross-references"
         }
     ],
     "repository": {
-        "interpreted-text-inline": {
-            "match": "(`)[^`]+(`)(?!_)",
+        "interpreted-text-basic": {
+            "match": "(`)([^`]+)(`)(?!_)",
             "captures": {
                 "1": {
                     "name": "punctuation.definition.interpreted.sphinx"
                 },
                 "2": {
-                    "name": "punctuation.definition.interpreted.sphinx"
-                }
-            },
-            "name": "markup.other.command.sphinx"
-        },
-        "anonymous-link": {
-            "match": "\\s*(__)\\s+(.+)",
-            "captures": {
-                "1": {
-                    "name": "punctuation.definition.link.sphinx"
-                },
-                "2": {
-                    "name": "markup.underline.link.sphinx"
-                }
-            },
-            "name": "meta.link.sphinx"
-        },
-        "interpreted-text-multiline": {
-            "begin": "(:)([-A-z0-9_.]*)(:)(`)",
-            "beginCaptures": {
-                "1": {
-                    "name": "punctuation.definition.interpreted.sphinx"
-                },
-                "2": {
-                    "name": "entity.name.role.sphinx"
+                    "name": "string.other.interpreted.sphinx"
                 },
                 "3": {
                     "name": "punctuation.definition.interpreted.sphinx"
-                },
-                "4": {
-                    "name": "punctuation.definition.interpreted.sphinx"
                 }
-            },
-            "end": "(`)",
-            "endCaptures": {
-                "1": {
-                    "name": "punctuation.definition.interpreted.sphinx"
-                }
-            },
-            "contentName": "string.other.interpreted.sphinx",
-            "name": "markup.other.command.sphinx"
+            }
         },
-        "link-trailing-underscore": {
-            "match": "(`)([^<`]+)\\s+(<)(.*?)(>)(`_)",
+        "link-reference": {
+            "match": "(`)(([A-z0-9][a-zA-Z0-9 \\-]+ (<)[a-zA-Z0-9/\\.-]+(>))|[a-zA-Z0-9/\\.-]+)(`_{1,2})",
             "captures": {
                 "1": {
                     "name": "punctuation.definition.link.sphinx"
@@ -105,68 +55,44 @@
                     "name": "punctuation.definition.location.sphinx"
                 },
                 "4": {
-                    "name": "markup.underline.link.sphinx"
-                },
-                "5": {
                     "name": "punctuation.definition.location.sphinx"
                 },
-                "6": {
+                "5": {
                     "name": "punctuation.definition.link.sphinx"
                 }
             },
-            "name": "meta.link.inline.sphinx"
+            "name": "meta.link.reference.sphinx"
         },
         "inline-literal": {
-            "begin": "``",
-            "end": "``((?=[^`\\w\\d])|$)",
+            "match": "(``)([^`\\n]+?)(``)",
             "captures": {
-                "0": {
+                "1": {
+                    "name": "punctuation.definition.raw.sphinx"
+                },
+                "2": {
+                    "name": "markup.raw.sphinx"
+                },
+                "3": {
                     "name": "punctuation.definition.raw.sphinx"
                 }
-            },
-            "name": "markup.raw.sphinx"
+            }
         },
-        "directives": {
-            "patterns": [
-                {
-                    "match": "^[ \\t]*(\\.\\.)\\s((\\|)(.*)(\\|)\\s)?([A-z][-A-z0-9_]+)(::)((\\s[Uu](\\+)\\d{4,5})?(\\s[-A-z0-9_]+([(])[-A-z0-9_]*([)]))?(\\s(\\.\\.)\\s)?.*)?",
-                    "captures": {
-                        "1": {
-                            "name": "punctuation.definition.directive.sphinx"
-                        },
-                        "3": {
-                            "name": "punctuation.definition.substitution.sphinx"
-                        },
-                        "4": {
-                            "name": "markup.underline.substitution.sphinx"
-                        },
-                        "5": {
-                            "name": "punctuation.definition.substitution.sphinx"
-                        },
-                        "6": {
-                            "name": "support.directive.sphinx"
-                        },
-                        "7": {
-                            "name": "punctuation.separator.key-value.sphinx"
-                        },
-                        "8": {
-                            "name": "entity.name.directive.sphinx"
-                        },
-                        "10": {
-                            "name": "punctuation.definition.directive.sphinx"
-                        },
-                        "12": {
-                            "name": "punctuation.definition.directive.sphinx"
-                        },
-                        "13": {
-                            "name": "punctuation.definition.directive.sphinx"
-                        },
-                        "15": {
-                            "name": "punctuation.definition.directive.sphinx"
-                        }
-                    }
+        "directive": {
+            "match": "^([\\t ]*)(\\.\\.) ([A-z][-A-z0-9_]+)(::)( (.+))?",
+            "captures": {
+                "2": {
+                    "name": "punctuation.definition.directive.sphinx"
+                },
+                "3": {
+                    "name": "entity.name.directive.sphinx"
+                },
+                "4": {
+                    "name": "punctuation.separator.key-value.sphinx"
+                },
+                "5": {
+                    "name": "support.directive.sphinx"
                 }
-            ]
+            }
         },
         "emphasis": {
             "patterns": [
@@ -196,19 +122,10 @@
                 }
             ]
         },
-        "headings": {
-            "match": "(^\\s*(=|\\-|~|`|#|\\^|\\+|\\*|:|\\.|_|\\+){3,}$)",
-            "captures": {
-                "1": {
-                    "name": "punctuation.definition.heading.sphinx"
-                }
-            },
-            "name": "markup.heading.sphinx"
-        },
-        "link-def": {
+        "link-definition": {
             "patterns": [
                 {
-                    "match": "(\\.\\.)\\s+(_)([-.\\d\\w\\s()]+)(:)\\s+(.*)",
+                    "match": "(\\.\\.) (_)`?([^`_]+[^`]*)`?(:) (.+)",
                     "captures": {
                         "1": {
                             "name": "punctuation.definition.link.sphinx"
@@ -229,7 +146,7 @@
                     "name": "meta.link.reference.def.sphinx"
                 },
                 {
-                    "match": "(\\.\\.)\\s+(_`)([^`]+)(`:)\\s+(.*)",
+                    "match": "(\\.\\.) (_{2})(:) (.+)",
                     "captures": {
                         "1": {
                             "name": "punctuation.definition.link.sphinx"
@@ -238,114 +155,49 @@
                             "name": "punctuation.definition.string.sphinx"
                         },
                         "3": {
-                            "name": "string.other.link.title.sphinx"
-                        },
-                        "4": {
                             "name": "punctuation.separator.key-value.sphinx"
                         },
-                        "5": {
+                        "4": {
                             "name": "markup.underline.link.sphinx"
-                        }
-                    },
-                    "name": "meta.link.reference.def.sphinx"
-                }
-            ]
-        },
-        "link-reference": {
-            "patterns": [
-                {
-                    "match": "\\`([-.:+_\\d\\w]+)\\`(_)\\b",
-                    "name": "meta.link.reference",
-                    "captures": {
-                        "1": {
-                            "name": "string.other.link.title.sphinx"
-                        },
-                        "2": {
-                            "name": "punctuation.definition.link.sphinx"
                         }
                     }
-                },
-                {
-                    "begin": "(`)",
-                    "beginCaptures": {
-                        "1": {
-                            "name": "punctuation.definition.link.sphinx"
-                        }
-                    },
-                    "end": "(`_)",
-                    "endCaptures": {
-                        "1": {
-                            "name": "punctuation.definition.link.sphinx"
-                        }
-                    },
-                    "name": "meta.link.reference",
-                    "patterns": [
-                        {
-                            "match": "[^`]+",
-                            "name": "string.other.link.title.sphinx"
-                        }
-                    ]
                 }
             ]
-        },
-        "raw-blocks": {
-            "begin": "^( *).+(::)$",
-            "beginCaptures": {
-                "1": {
-                    "name": "punctuation.section.raw.sphinx"
-                }
-            },
-            "end": "^\\1(?=\\S)",
-            "endCaptures": {
-                "1": {
-                    "name": "entity.name.type.sphinx"
-                }
-            },
-            "contentName": "meta.raw.block.sphinx",
-            "patterns": [
-                {
-                    "include": "#raw-blocks-inner"
-                }
-            ]
-        },
-        "raw-blocks-inner": {
-            "match": ".+",
-            "name": "meta.raw.inner.sphinx"
         },
         "tag": {
-            "match": "(:)([a-zA-Z][[a-zA-Z0-9] _\\-\\.]+[a-zA-Z])(:)",
-            "name": "entity.name.tag.sphinx"
-        },
-        "cross-references": {
-            "match": ":(\\w+):`([^`]+)`(?!_)",
+            "match": "(:)([A-z][[A-z0-9] _\\-\\.]+?[A-z](\\?_)?)(:)(?!`)",
             "captures": {
                 "1": {
-                    "name": "entity.name.role.sphinx"
+                    "name": "punctuation.definition.interpreted.sphinx"
                 },
                 "2": {
-                    "name": "string.other.interpreted.sphinx"
+                    "name": "entity.name.tag.sphinx"
+                },
+                "3": {
+                    "name": "punctuation.definition.interpreted.sphinx"
                 }
             }
         },
-        "google-style": {
-            "patterns": [
-                {
-                    "include": "#google-headings"
-                },
-                {
-                    "include": "#google-arguments"
-                }
-            ]
-        },
-        "google-headings": {
-            "match": "^( *)(\\w+):$",
-            "name": "markup.bold.heading.sphinx"
-        },
-        "google-arguments": {
-            "match": "^( +)(\\*{0,2}\\w+( \\(optional\\))?):(?= \\S)",
+        "cross-references": {
+            "match": "(:)(\\w+)(:)(`)([^`]+)(`)(?!_)",
             "captures": {
+                "1": {
+                    "name": "punctuation.definition.interpreted.sphinx"
+                },
                 "2": {
-                    "name": "entity.name.type.sphinx"
+                    "name": "entity.name.tag.sphinx"
+                },
+                "3": {
+                    "name": "punctuation.definition.interpreted.sphinx"
+                },
+                "4": {
+                    "name": "punctuation.definition.location.sphinx"
+                },
+                "5": {
+                    "name": "entity.name.role.sphinx"
+                },
+                "6": {
+                    "name": "punctuation.definition.location.sphinx"
                 }
             }
         }

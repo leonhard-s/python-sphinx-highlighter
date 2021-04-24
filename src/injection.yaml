@@ -11,101 +11,73 @@ injectionSelector: string.quoted.docstring
 # so "${{ apple }}" would get replaced by the corresponding "apple" key
 # defined in this mapping.
 variables:
-  alpha: "[a-zA-Z]"
-  alphaNum: "[a-zA-Z0-9]"
-  captureLeadingWhitespace: ^( *)
+  alpha: "[A-z]"
+  alphaNum: "[A-z0-9]"
+  captureLeadingWhitespace: ^([\t ]*)
+  roleName: "[-A-z0-9_]+"
   matchLeadingWhitespace: ^\1(?=\S)
-  tripleQuote: (\"\"\"|\'\'\')
+  refTarget: "[a-zA-Z0-9/\\.-]+"
 
 # Top-level patterns to inject
 patterns:
-  - include: "#directives"
-  - include: "#raw-blocks"
+  - include: "#directive"
+  - include: "#interpreted-text-basic"
   - include: "#emphasis"
-  - include: "#link-def"
-  - include: "#interpreted-text-inline"
-  - include: "#anonymous-link"
   - include: "#inline-literal"
   - include: "#link-reference"
-  - include: "#link-trailing-underscore"
-  - include: "#cross-references" # <- inserted
+  - include: "#link-definition"
   - include: "#tag"
-  - include: "#headings"
-  # Non-standard, Google-style additions
-  - include: "#google-style"
+  - include: "#cross-references"
 
 # Pattern definitions
 repository:
-  interpreted-text-inline:
-    # Single-line interpreted text roles
-    match: (`)[^`]+(`)(?!_)
+  interpreted-text-basic:
+    # Generic interpreted text role
+    # ---
+    # This catches interpreted text roles without a role specification.
+    # In Docstrings, this is mostly used for references to parameters
+    # like `my_attr`.
+    match: (`)([^`]+)(`)(?!_)
     captures:
-      "1": { name: punctuation.definition.interpreted.sphinx }
-      "2": { name: punctuation.definition.interpreted.sphinx }
-    name: markup.other.command.sphinx
+      1: { name: punctuation.definition.interpreted.sphinx }
+      2: { name: string.other.interpreted.sphinx }
+      3: { name: punctuation.definition.interpreted.sphinx }
 
-  anonymous-link:
-    # Anonymous links, created via two leading underscores,
-    # e.g. "__ https://python.org/
-    match: \s*(__)\s+(.+)
+  link-reference:
+    # Inline references to links
+    # ---
+    # Basic link:     `target`_
+    # Named link:     `Link name <target>`_
+    # Anonymous link: `Link name`__
+    match: (`)((${{ alphaNum }}[a-zA-Z0-9 \-]+ (<)${{ refTarget }}(>))|${{ refTarget }})(`_{1,2})
     captures:
-      "1": { name: punctuation.definition.link.sphinx }
-      "2": { name: markup.underline.link.sphinx }
-    name: meta.link.sphinx
-
-  interpreted-text-multiline:
-    # An interpreted text block spanning multiple lines
-    begin: (:)([-A-z0-9_.]*)(:)(`)
-    beginCaptures:
-      "1": { name: punctuation.definition.interpreted.sphinx }
-      "2": { name: entity.name.role.sphinx }
-      "3": { name: punctuation.definition.interpreted.sphinx }
-      "4": { name: punctuation.definition.interpreted.sphinx }
-    end: (`)
-    endCaptures:
-      "1": { name: punctuation.definition.interpreted.sphinx }
-    contentName: string.other.interpreted.sphinx
-    name: markup.other.command.sphinx
-
-  link-trailing-underscore:
-    # Links created with trailing underscores,
-    # e.g. "`https://python.org`_"
-    match: (`)([^<`]+)\s+(<)(.*?)(>)(`_)
-    captures:
-      "1": { name: punctuation.definition.link.sphinx }
-      "2": { name: string.other.link.title.sphinx }
-      "3": { name: punctuation.definition.location.sphinx }
-      "4": { name: markup.underline.link.sphinx }
-      "5": { name: punctuation.definition.location.sphinx }
-      "6": { name: punctuation.definition.link.sphinx }
-    name: meta.link.inline.sphinx
+      1: { name: punctuation.definition.link.sphinx }
+      2: { name: string.other.link.title.sphinx }
+      3: { name: punctuation.definition.location.sphinx }
+      4: { name: punctuation.definition.location.sphinx }
+      5: { name: punctuation.definition.link.sphinx }
+    name: meta.link.reference.sphinx
 
   inline-literal:
     # Inline literal text blocks
-    begin: "``"
-    end: "``((?=[^`\\w\\d])|$)"
+    # ---
+    # This catches inline literal values like ``example``.
+    match: (``)([^`\n]+?)(``)
     captures:
-      "0": { name: punctuation.definition.raw.sphinx }
-    name: markup.raw.sphinx
+      1: { name: punctuation.definition.raw.sphinx }
+      2: { name: markup.raw.sphinx }
+      3: { name: punctuation.definition.raw.sphinx }
 
-  directives:
-    patterns:
-      # I am not going to pretend that I reverse-engineered this one;
-      # this is a carbon copy of what the default VS Code RST syntax
-      # highlights and I am absolutely fine with that.
-      - match: ^[ \t]*(\.\.)\s((\|)(.*)(\|)\s)?([A-z][-A-z0-9_]+)(::)((\s[Uu](\+)\d{4,5})?(\s[-A-z0-9_]+([(])[-A-z0-9_]*([)]))?(\s(\.\.)\s)?.*)?
-        captures:
-          "1": { name: punctuation.definition.directive.sphinx }
-          "3": { name: punctuation.definition.substitution.sphinx }
-          "4": { name: markup.underline.substitution.sphinx }
-          "5": { name: punctuation.definition.substitution.sphinx }
-          "6": { name: support.directive.sphinx }
-          "7": { name: punctuation.separator.key-value.sphinx }
-          "8": { name: entity.name.directive.sphinx }
-          "10": { name: punctuation.definition.directive.sphinx }
-          "12": { name: punctuation.definition.directive.sphinx }
-          "13": { name: punctuation.definition.directive.sphinx }
-          "15": { name: punctuation.definition.directive.sphinx }
+  directive:
+    # Interpreted text with role specification
+    # ---
+    # This captures one-line blocks like ".. code-block:: python".
+    match: ${{ captureLeadingWhitespace }}(\.\.) (${{ alpha }}${{ roleName }})(::)( (.+))?
+    captures:
+      2: { name: punctuation.definition.directive.sphinx }
+      3: { name: entity.name.directive.sphinx }
+      4: { name: punctuation.separator.key-value.sphinx }
+      5: { name: support.directive.sphinx }
 
   emphasis:
     # For coding with ~passion~ \o/
@@ -113,108 +85,57 @@ repository:
       # Boild text, for when you need to write with passion
       - match: (\*\*)[^*]+(\*\*)
         captures:
-          "1": { name: punctuation.definition.bold.sphinx }
-          "3": { name: punctuation.definition.bold.sphinx }
+          1: { name: punctuation.definition.bold.sphinx }
+          3: { name: punctuation.definition.bold.sphinx }
         name: markup.bold.sphinx
       # Italic text, for writing lies
       - match: (\*)[^*]+(\*)
         captures:
-          "1": { name: punctuation.definition.italic.sphinx }
-          "3": { name: punctuation.definition.italic.sphinx }
+          1: { name: punctuation.definition.italic.sphinx }
+          3: { name: punctuation.definition.italic.sphinx }
         name: markup.italic.sphinx
 
-  headings:
-    match: (^\s*(=|\-|~|`|#|\^|\+|\*|:|\.|_|\+){3,}$)
-    captures:
-      "1": { name: punctuation.definition.heading.sphinx }
-    name: markup.heading.sphinx
-
-  link-def:
+  link-definition:
     # Link definitions to be used elsewhere
     patterns:
-      # Replacement type 1
-      - match: (\.\.)\s+(_)([-.\d\w\s()]+)(:)\s+(.*)
+      # Named link definition
+      # ---
+      # .. _`Link name`: https://www.python.org/
+      # .. _Link name: https://www.python.org/
+      - match: (\.\.) (_)`?([^`_]+[^`]*)`?(:) (.+)
         captures:
-          "1": { name: punctuation.definition.link.sphinx }
-          "2": { name: punctuation.definition.string.sphinx }
-          "3": { name: string.other.link.title.sphinx }
-          "4": { name: punctuation.separator.key-value.sphinx }
-          "5": { name: markup.underline.link.sphinx }
+          1: { name: punctuation.definition.link.sphinx }
+          2: { name: punctuation.definition.string.sphinx }
+          3: { name: string.other.link.title.sphinx }
+          4: { name: punctuation.separator.key-value.sphinx }
+          5: { name: markup.underline.link.sphinx }
         name: meta.link.reference.def.sphinx
-      # Replacement type 2
-      - match: (\.\.)\s+(_`)([^`]+)(`:)\s+(.*)
+      # Anonymous link definition
+      # ---
+      # .. __: https://www.python.org/
+      - match: (\.\.) (_{2})(:) (.+)
         captures:
-          "1": { name: punctuation.definition.link.sphinx }
-          "2": { name: punctuation.definition.string.sphinx }
-          "3": { name: string.other.link.title.sphinx }
-          "4": { name: punctuation.separator.key-value.sphinx }
-          "5": { name: markup.underline.link.sphinx }
-        name: meta.link.reference.def.sphinx
-
-  link-reference:
-    # Using link definitions elsewhere
-    patterns:
-      # Regular inline link definitions, e.g. "link_".
-      - match: \`([-.:+_\d\w]+)\`(_)\b
-        name: meta.link.reference
-        captures:
-          "1": { name: string.other.link.title.sphinx }
-          "2": { name: punctuation.definition.link.sphinx }
-      - begin: (`)
-        beginCaptures:
-          "1": { name: punctuation.definition.link.sphinx }
-        end: (`_)
-        endCaptures:
-          "1": { name: punctuation.definition.link.sphinx }
-        name: meta.link.reference
-        patterns:
-          - match: "[^`]+"
-            name: string.other.link.title.sphinx
-
-  raw-blocks:
-    # An unformatted, literal block of text - which is not the same
-    # thing as a code block, apparently
-    begin: ${{ captureLeadingWhitespace }}.+(::)$
-    beginCaptures:
-      "1": { name: punctuation.section.raw.sphinx }
-    end: ${{ matchLeadingWhitespace }}
-    endCaptures:
-      "1": { name: entity.name.type.sphinx }
-    contentName: meta.raw.block.sphinx
-    patterns:
-      - include: "#raw-blocks-inner"
-
-  raw-blocks-inner:
-    # The inner part of a raw block to highlight *differently*
-    match: .+
-    name: meta.raw.inner.sphinx
+          1: { name: punctuation.definition.link.sphinx }
+          2: { name: punctuation.definition.string.sphinx }
+          3: { name: punctuation.separator.key-value.sphinx }
+          4: { name: markup.underline.link.sphinx }
 
   tag:
     # RST inline tags. These are mostly used for autodoc tags, i.e.
     # things like ":param key:" or ":rtype: str".
-    match: (:)(${{alpha}}[${{alphaNum}} _\-\.]+${{alpha}})(:)
-    name: entity.name.tag.sphinx
+    match: (:)(${{ alpha }}[${{ alphaNum }} _\-\.]+?${{ alpha }}(\?_)?)(:)(?!`)
+    captures:
+      1: { name: punctuation.definition.interpreted.sphinx }
+      2: { name: entity.name.tag.sphinx }
+      3: { name: punctuation.definition.interpreted.sphinx }
 
   cross-references:
     # Add support for colourful cross-references
-    match: :(\w+):`([^`]+)`(?!_)
+    match: (:)(\w+)(:)(`)([^`]+)(`)(?!_)
     captures:
-      "1": { name: entity.name.role.sphinx }
-      "2": { name: string.other.interpreted.sphinx }
-
-  google-style:
-    # Custom rules to apply for juicier Google-style docstrings
-    patterns:
-      - include: "#google-headings"
-      - include: "#google-arguments"
-
-  google-headings:
-    # Google-style headings, i.e. single words ending in a single colon
-    match: "^( *)(\\w+):$"
-    name: markup.bold.heading.sphinx
-
-  google-arguments:
-    # Google-style arguments
-    match: ^( +)(\*{0,2}\w+( \(optional\))?):(?= \S)
-    captures:
-      "2": { name: entity.name.type.sphinx }
+      1: { name: punctuation.definition.interpreted.sphinx }
+      2: { name: entity.name.tag.sphinx }
+      3: { name: punctuation.definition.interpreted.sphinx }
+      4: { name: punctuation.definition.location.sphinx }
+      5: { name: entity.name.role.sphinx }
+      6: { name: punctuation.definition.location.sphinx }
