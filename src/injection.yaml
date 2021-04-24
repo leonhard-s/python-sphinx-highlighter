@@ -215,6 +215,6 @@ repository:
 
   google-arguments:
     # Google-style arguments
-    match: "^( +)(\\*{0,2}\\w+( \\(optional\\))?):(?= \\S)"
+    match: ^( +)(\*{0,2}\w+( \(optional\))?):(?= \S)
     captures:
       "2": { name: entity.name.type.sphinx }
