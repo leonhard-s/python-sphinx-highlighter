@@ -254,7 +254,7 @@
         "link-reference": {
             "patterns": [
                 {
-                    "match": "\\b([-.:+_\\d\\w]+)(_)\\b",
+                    "match": "\\`([-.:+_\\d\\w]+)\\`(_)\\b",
                     "name": "meta.link.reference",
                     "captures": {
                         "1": {

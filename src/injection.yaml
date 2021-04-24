@@ -155,7 +155,7 @@ repository:
     # Using link definitions elsewhere
     patterns:
       # Regular inline link definitions, e.g. "link_".
-      - match: \b([-.:+_\d\w]+)(_)\b
+      - match: \`([-.:+_\d\w]+)\`(_)\b
         name: meta.link.reference
         captures:
           "1": { name: string.other.link.title.sphinx }
