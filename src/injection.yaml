@@ -83,13 +83,13 @@ repository:
     # For coding with ~passion~ \o/
     patterns:
       # Boild text, for when you need to write with passion
-      - match: (\*\*)[^*]+(\*\*)
+      - match: (\*\*)[^\t *][^*]+[^\t *](\*\*)
         captures:
           1: { name: punctuation.definition.bold.sphinx }
           3: { name: punctuation.definition.bold.sphinx }
         name: markup.bold.sphinx
       # Italic text, for writing lies
-      - match: (\*)[^*]+(\*)
+      - match: (\*)[^\t *][^*]+[^\t *](\*)
         captures:
           1: { name: punctuation.definition.italic.sphinx }
           3: { name: punctuation.definition.italic.sphinx }

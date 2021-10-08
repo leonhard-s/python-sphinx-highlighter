@@ -97,7 +97,7 @@
         "emphasis": {
             "patterns": [
                 {
-                    "match": "(\\*\\*)[^*]+(\\*\\*)",
+                    "match": "(\\*\\*)[^\\t *][^*]+[^\\t *](\\*\\*)",
                     "captures": {
                         "1": {
                             "name": "punctuation.definition.bold.sphinx"
@@ -109,7 +109,7 @@
                     "name": "markup.bold.sphinx"
                 },
                 {
-                    "match": "(\\*)[^*]+(\\*)",
+                    "match": "(\\*)[^\\t *][^*]+[^\\t *](\\*)",
                     "captures": {
                         "1": {
                             "name": "punctuation.definition.italic.sphinx"
