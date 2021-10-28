@@ -82,7 +82,7 @@ repository:
   emphasis:
     # For coding with ~passion~ \o/
     patterns:
-      # Boild text, for when you need to write with passion
+      # Bold text, for when you need to write with passion
       - match: (\*\*)[^\t *][^*]+[^\t *](\*\*)
         captures:
           1: { name: punctuation.definition.bold.sphinx }
@@ -123,7 +123,7 @@ repository:
   tag:
     # RST inline tags. These are mostly used for autodoc tags, i.e.
     # things like ":param key:" or ":rtype: str".
-    match: (:)(${{ alpha }}[${{ alphaNum }} _\-\.]+?${{ alpha }}(\?_)?)(:)(?!`)
+    match: (:)(${{ alpha }}[${{ alphaNum }} _\-\.\*\\]+?${{ alphaNum }}(\?_)?)(:)(?!`)
     captures:
       1: { name: punctuation.definition.interpreted.sphinx }
       2: { name: entity.name.tag.sphinx }
