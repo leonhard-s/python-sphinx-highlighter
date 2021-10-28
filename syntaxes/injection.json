@@ -165,7 +165,7 @@
             ]
         },
         "tag": {
-            "match": "(:)([A-z][[A-z0-9] _\\-\\.]+?[A-z0-9](\\?_)?)(:)(?!`)",
+            "match": "(:)([A-z][[A-z0-9] _\\-\\.\\*\\\\]+?[A-z0-9](\\?_)?)(:)(?!`)",
             "captures": {
                 "1": {
                     "name": "punctuation.definition.interpreted.sphinx"
