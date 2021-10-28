@@ -2,7 +2,7 @@
     "name": "python-sphinx-highlight",
     "displayName": "Python Sphinx Highlighter",
     "description": "Highlight Sphinx-specific markup inside Python docstrings.",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "publisher": "leonhard-s",
     "engines": {
         "vscode": "^1.50.0"

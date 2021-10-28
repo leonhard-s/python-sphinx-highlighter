@@ -14,6 +14,14 @@ This extension alleviates this drawback by highlighting select Sphinx and [reStr
 
 ## Release Notes
 
+### 0.1.1
+
+#### Bugfixes
+
+- Parameters ending in numbers will now be highlighted properly ([#4](https://github.com/leonhard-s/python-sphinx-highlighter/issues/4))
+- Fixed parameters using wildcard notation (`*args`, `**kwargs`) not being recognized as sphings tags ([#4](https://github.com/leonhard-s/python-sphinx-highlighter/issues/4))
+- Inline formatting will no longer be applied when the control characters are surrounded by whitespace ([#5](https://github.com/leonhard-s/python-sphinx-highlighter/issues/5))
+
 ### 0.1.0
 
 Initial release
