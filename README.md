@@ -12,6 +12,10 @@ Sphinx docstrings are compact and can easily be converted into HTML or PDF docum
 
 This extension alleviates this drawback by highlighting select Sphinx and [reStructuredText](https://docutils.sourceforge.io/rst.html) directives within Python docstrings.
 
+## Compatibility Notes
+
+This extension is only compatible with the default VS Code [Python](https://marketplace.visualstudio.com/items?itemName=ms-python.python) extension. It is **not** compatible with [Python for VSCode](https://marketplace.visualstudio.com/items?itemName=tht13.python), see #6 for details.
+
 ## Release Notes
 
 ### 0.1.1
