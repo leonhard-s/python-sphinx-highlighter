@@ -14,7 +14,7 @@ This extension alleviates this drawback by highlighting select Sphinx and [reStr
 
 ## Compatibility Notes
 
-This extension is only compatible with the default VS Code [Python](https://marketplace.visualstudio.com/items?itemName=ms-python.python) extension. It is **not** compatible with [Python for VSCode](https://marketplace.visualstudio.com/items?itemName=tht13.python), see #6 for details.
+This extension is only compatible with the default VS Code [Python](https://marketplace.visualstudio.com/items?itemName=ms-python.python) extension. It is **not** compatible with [Python for VSCode](https://marketplace.visualstudio.com/items?itemName=tht13.python), see [#6](https://github.com/leonhard-s/python-sphinx-highlighter/issues/6) for details.
 
 ## Release Notes
 
