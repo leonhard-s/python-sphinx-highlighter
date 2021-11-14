@@ -23,7 +23,7 @@ This extension is only compatible with the default VS Code [Python](https://mark
 #### Bugfixes
 
 - Parameters ending in numbers will now be highlighted properly ([#4](https://github.com/leonhard-s/python-sphinx-highlighter/issues/4))
-- Fixed parameters using wildcard notation (`*args`, `**kwargs`) not being recognized as sphings tags ([#4](https://github.com/leonhard-s/python-sphinx-highlighter/issues/4))
+- Fixed parameters using wildcard notation (`*args`, `**kwargs`) not being recognized as sphinx tags ([#4](https://github.com/leonhard-s/python-sphinx-highlighter/issues/4))
 - Inline formatting will no longer be applied when the control characters are surrounded by whitespace ([#5](https://github.com/leonhard-s/python-sphinx-highlighter/issues/5))
 
 ### 0.1.0
