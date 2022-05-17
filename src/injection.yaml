@@ -127,7 +127,7 @@ repository:
     captures:
       1: { name: punctuation.definition.interpreted.sphinx }
       2: { name: entity.name.tag.sphinx }
-      3: { name: punctuation.definition.interpreted.sphinx }
+      4: { name: punctuation.definition.interpreted.sphinx }
 
   cross-references:
     # Add support for colourful cross-references
