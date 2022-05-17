@@ -177,7 +177,7 @@
                     "name": "entity.name.tag.value.sphinx"
                 },
                 "5": {
-                    "name": "punctuation.definition.interpreted.sphinx"
+                    "name": "punctuation.definition.interpreted.end.sphinx"
                 }
             }
         },
