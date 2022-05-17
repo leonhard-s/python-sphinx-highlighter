@@ -126,7 +126,7 @@ repository:
       1: { name: punctuation.definition.interpreted.sphinx }
       2: { name: entity.name.tag.sphinx }
       4: { name: entity.name.tag.value.sphinx }
-      5: { name: punctuation.definition.interpreted.sphinx }
+      5: { name: punctuation.definition.interpreted.end.sphinx }
 
   cross-references:
     # Add support for colourful cross-references
