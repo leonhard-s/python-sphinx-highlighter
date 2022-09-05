@@ -2,7 +2,10 @@
 
 """
 
-:param:                         This tag does not have a name.
+:param:                         This tag has no value
+:param a:                       This tag's value is a single char
+:param a b:                     This tag has two values
+:param float value:             This tag has type information
 :param p1:                      Ends in a number.
 :param dict_:                   Ends in an underscore.
 :param dict\\_:                 Ends in an escaped underscore.
