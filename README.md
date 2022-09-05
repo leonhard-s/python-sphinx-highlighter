@@ -18,7 +18,30 @@ This extension is only compatible with the default VS Code [Python](https://mark
 
 ## Release Notes
 
-### 0.2.0
+### v0.3.0
+
+#### Changes
+
+- Multi-word tag values (such as `:param int y:`) are now permitted. This is used by Sphinx autodoc to include the argument type in a single line:
+
+    ```py
+    def foo(x, y):
+        """
+        :param int x: Argument with autodoc shorthand
+
+        :param y: Argument with separate type tag
+        :type y: int
+        """
+        ...
+    ```
+
+    Both variants are correct and highlighted when using this extension.
+
+#### Bug fixes
+
+- Single character tag values (such as `:param x:`) are now recognized as tags
+
+### v0.2.0
 
 #### Changes
 
@@ -28,7 +51,7 @@ This extension is only compatible with the default VS Code [Python](https://mark
 
 - The closing colon of a Sphinx tag will now be correctly scoped as `punctuation.definition.interpreted.sphinx` ([#8](https://github.com/leonhard-s/python-sphinx-highlighter/issues/8))
 
-### 0.1.1
+### v0.1.1
 
 #### Bug fixes
 
@@ -36,6 +59,6 @@ This extension is only compatible with the default VS Code [Python](https://mark
 - Fixed parameters using wildcard notation (`*args`, `**kwargs`) not being recognized as sphinx tags ([#4](https://github.com/leonhard-s/python-sphinx-highlighter/issues/4))
 - Inline formatting will no longer be applied when the control characters are surrounded by whitespace ([#5](https://github.com/leonhard-s/python-sphinx-highlighter/issues/5))
 
-### 0.1.0
+### v0.1.0
 
 Initial release
