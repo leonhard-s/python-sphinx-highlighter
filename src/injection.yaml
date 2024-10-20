@@ -35,7 +35,7 @@ repository:
     # This catches interpreted text roles without a role specification.
     # In Docstrings, this is mostly used for references to parameters
     # like `my_attr`.
-    match: (`)([^`]+)(`)(?!_)
+    match: (?<=\s)(`)([^`]+)(`)(?=\s)
     captures:
       1: { name: punctuation.definition.interpreted.sphinx }
       2: { name: string.other.interpreted.sphinx }
@@ -81,13 +81,13 @@ repository:
     # For coding with ~passion~ \o/
     patterns:
       # Bold text, for when you need to write with passion
-      - match: (\*\*)[^\t *]([^*]*[^\t *])?(\*\*)
+      - match: (?<=\s)(\*\*)[^\t *]([^*]*[^\t *])?(\*\*)(?!\s)
         captures:
           1: { name: punctuation.definition.bold.sphinx }
           4: { name: punctuation.definition.bold.sphinx }
         name: markup.bold.sphinx
       # Italic text, for writing lies
-      - match: (\*)[^\t *]([^*]*[^\t *])?(\*)
+      - match: (?<=\s)(\*)[^\t *]([^*]*[^\t *])?(\*)(?!\s)
         captures:
           1: { name: punctuation.definition.italic.sphinx }
           4: { name: punctuation.definition.italic.sphinx }

@@ -29,7 +29,7 @@
     ],
     "repository": {
         "interpreted-text-basic": {
-            "match": "(`)([^`]+)(`)(?!_)",
+            "match": "(?<=\\s)(`)([^`]+)(`)(?=\\s)",
             "captures": {
                 "1": {
                     "name": "punctuation.definition.interpreted.sphinx"
@@ -97,7 +97,7 @@
         "emphasis": {
             "patterns": [
                 {
-                    "match": "(\\*\\*)[^\\t *]([^*]*[^\\t *])?(\\*\\*)",
+                    "match": "(?<=\\s)(\\*\\*)[^\\t *]([^*]*[^\\t *])?(\\*\\*)(?!\\s)",
                     "captures": {
                         "1": {
                             "name": "punctuation.definition.bold.sphinx"
@@ -109,7 +109,7 @@
                     "name": "markup.bold.sphinx"
                 },
                 {
-                    "match": "(\\*)[^\\t *]([^*]*[^\\t *])?(\\*)",
+                    "match": "(?<=\\s)(\\*)[^\\t *]([^*]*[^\\t *])?(\\*)(?!\\s)",
                     "captures": {
                         "1": {
                             "name": "punctuation.definition.italic.sphinx"
